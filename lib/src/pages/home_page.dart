@@ -11,6 +11,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Obtener los populares
+    peliculasProvider.getPopulares();
     return Scaffold(
       appBar: AppBar(
         centerTitle     : false,
@@ -57,8 +59,6 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _footer(BuildContext context) {
-    peliculasProvider.getPopulares();
-
     return Container(
       width: double.infinity,
       child: Column(
@@ -69,16 +69,26 @@ class HomePage extends StatelessWidget {
             child: Text('Populares', style: Theme.of(context).textTheme.subhead,),
           ),
           SizedBox(height: 5.0,),
-          FutureBuilder(
-            future: peliculasProvider.getPopulares(),
+          StreamBuilder(
+            stream: peliculasProvider.popularesStream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                return MovieHorizontal(peliculas: snapshot.data,);
+                return MovieHorizontal(peliculas: snapshot.data, siguientePagina: peliculasProvider.getPopulares);
               } else {
                 return Center(child: CircularProgressIndicator(),);
               }
             },
           ),
+          // FutureBuilder(
+          //   future: peliculasProvider.getPopulares(),
+          //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+          //     if (snapshot.hasData) {
+          //       return MovieHorizontal(peliculas: snapshot.data,);
+          //     } else {
+          //       return Center(child: CircularProgressIndicator(),);
+          //     }
+          //   },
+          // ),
         ],
       ),
     );
