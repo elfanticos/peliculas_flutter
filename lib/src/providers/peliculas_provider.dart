@@ -11,6 +11,8 @@ class  PeliculasProvider {
   String _language          = 'es-ES';
   int _popularesPage        = 0;
   List<Pelicula> _populares = new List();
+  bool _cargando            = false;
+
   final _popularesStream    = StreamController<List<Pelicula>>.broadcast();
 
   // Geter para agregar y mostrar los stream
@@ -52,9 +54,13 @@ class  PeliculasProvider {
 
   Future<List<Pelicula>> getPopulares() async {
 
+    // Validar si ya se envio a solicitar los populares
+    if (_cargando) return [];
+    _cargando= true;
+    
     // Aumentar contador
     _popularesPage++;
-
+    print('cargando');
     // Objeto de parametro
     dynamic param = {
       'api_key'  : _apikey,
@@ -65,6 +71,7 @@ class  PeliculasProvider {
     final rpta = await _procesarRespuesta(_getService('/3/movie/popular', param));
     _populares.addAll(rpta);
     populasSink(_populares);
+    _cargando = false;
     return rpta;
     
   }

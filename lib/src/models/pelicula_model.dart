@@ -72,4 +72,12 @@ class Pelicula {
       return 'https://image.tmdb.org/t/p/w500/$posterPath';
     }
   }
+
+  String getBackgroundImg() {
+    if (posterPath == null) {
+      return 'https://insidelatinamerica.net/wp-content/uploads/2018/01/noImg_2.jpg';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+    }
+  }
 }
