@@ -60,7 +60,7 @@ class  PeliculasProvider {
     
     // Aumentar contador
     _popularesPage++;
-    print('cargando');
+
     // Objeto de parametro
     dynamic param = {
       'api_key'  : _apikey,
@@ -74,5 +74,18 @@ class  PeliculasProvider {
     _cargando = false;
     return rpta;
     
+  }
+
+
+  Future<List<Pelicula>> buscarPelicula(String query) async {
+
+    // Objeto de parametro
+    dynamic param = {
+      'api_key'  : _apikey,
+      'language' : _language,
+      'query'    : query
+    };
+
+    return await _procesarRespuesta(_getService('3/search/movie',param));
   }
 }

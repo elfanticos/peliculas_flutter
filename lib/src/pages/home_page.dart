@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
 import 'package:peliculas/src/widgets/card_swiper_widget.dart';
 import 'package:peliculas/src/widgets/movie_horizontal_widget.dart';
-
-
+import 'package:peliculas/src/search/search_delegate.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -21,7 +20,9 @@ class HomePage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon      : Icon(Icons.search),
-            onPressed : () {},
+            onPressed : () {
+              showSearch(context: context, delegate: DataSearch());
+            },
           )
         ],
       ),
@@ -79,16 +80,6 @@ class HomePage extends StatelessWidget {
               }
             },
           ),
-          // FutureBuilder(
-          //   future: peliculasProvider.getPopulares(),
-          //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-          //     if (snapshot.hasData) {
-          //       return MovieHorizontal(peliculas: snapshot.data,);
-          //     } else {
-          //       return Center(child: CircularProgressIndicator(),);
-          //     }
-          //   },
-          // ),
         ],
       ),
     );
